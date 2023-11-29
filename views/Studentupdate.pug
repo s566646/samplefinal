@@ -1,0 +1,43 @@
+extends layout
+block content
+ if (toShow == null)
+    h2 No instance to update
+ else
+        h1= title
+        - let costumeid = toShow._id
+        - let sname = toShow.Stu_Name
+        - let sage = toShow.Stu_Age
+        - let smail = toShow.Mail_Id 
+        div.row(class='mb-2')
+            div.mr-1 ID is
+            div #{costumeid}
+        - let actionid = "/resource/Student/"+toShow._id
+        form(id='CostumeForm', action=actionid, method='PUT')   
+            div.form-group
+                label.costumeAttr(for='Stu_Name') Student Name
+                input#costume_type(type='text', name='Stu_Name' value=sname)
+            div.form-group
+                label.costumeAttr(for='Stu_Age') Student Age 
+                input#size(type='number', name='Stu_Age' value=sage)
+            div.form-group
+                label.costumeAttr(for='Mail_Id') Student Mail Id
+                input#cost(type='text', name='Mail_Id' value=smail)
+            input(type="submit")
+        script.
+             document.forms['CostumeForm'].addEventListener('submit', (event) => {
+                event.preventDefault();
+                // TODO do something here to show user that form is being submitted
+                fetch(event.target.action, {
+                method: 'PUT',
+                body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+                }).then((resp) => {
+                return resp.json(); // or resp.text() or whatever the server sends
+                }).then((body) => {
+                alert("Update succeded")
+                // TODO handle body
+                }).catch((error) => {
+                // TODO handle error
+                console.log(JSON.stringify(error))
+                alert("Update failed, Please Enter valid details " )
+                });
+             });

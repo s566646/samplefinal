@@ -1,0 +1,31 @@
+extends layout
+block content
+
+    h1= title
+    form(id='CostumeForm', action="/resource/Student", method="POST")
+        div.form-group
+            label.costumeAttr(for='Stu_Name') Student Name
+            input#costume_type(type='text', name='Stu_Name')
+        div.form-group
+            label.costumeAttr(for='Stu_Age') Student Age
+            input#size(type='number', name='Stu_Age')
+        div.form-group
+            label.costumeAttr(for='Mail_Id') Student Mail ID
+            input#cost(type='text', name='Mail_Id')
+        input(type="submit")
+    script.
+        document.forms['CostumeForm'].addEventListener('submit', (event) => {
+            event.preventDefault();
+        // TODO do something here to show user that form is being submitted
+        fetch(event.target.action, {
+        method: 'POST',
+        body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+        }).then((resp) => {
+        return resp.json(); // or resp.text() or whatever the server sends
+        }).then((body) => {
+        alert("Save succeded")
+        // TODO handle body
+        }).catch((error) => {
+        // TODO handle error
+        alert("Save failed " + error )
+        });

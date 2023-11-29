@@ -1,0 +1,31 @@
+extends layout
+block content
+ if (!user)
+    a(href="/login") Login
+    br
+    br
+    a(href="/register") Register
+ if (user)
+    p You are currently logged in as #{user.username}
+    a(href="/Student") Take me to Students
+    br
+    a(href="/logout") Logout
+
+//- extends layout
+
+//- block content
+  h1= title
+  p Never Ever Give Up #{title}
+  button(type="button", class="btn btn-secondary" onclick="doReduce()") press me
+  div(id="reduce") Reduce the value
+  a(href='http://localhost:3000/Student') Link
+  script.
+    let count=20;
+    let change =-1;
+    function doReduce(){
+      console.log("entered fn")
+      count=count+change;
+      change=change-1;
+      document.getElementById('reduce').innerHTML=`Count ${count} with Change ${change}`
+    }
+

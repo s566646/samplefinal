@@ -1,0 +1,48 @@
+extends layout
+block content
+ h1= title
+ if (toShow == null)
+    h2 No instance to delete
+ else
+    - let Studentid = toShow._id
+    - let Stu_Name = toShow.Stu_Name
+    - let Stu_Age = toShow.Stu_Age
+    - let Mail_Id = toShow.Mail_Id
+    - let actionid = "/resource/Student/" + Studentid
+    script let actionid = "#{actionid}"
+    div
+        div.row
+            div(class='StudentAttr mr-3') Student ID is:
+            div #{Studentid}
+        div.row
+            div(class='StudentAttr mr-3') Student Name is:
+            div #{Stu_Name}
+        div.row
+            div(class='StudentAttr mr-3') Student Age is:
+            div #{Stu_Age}
+        div.row
+            div(class='StudentAttr mr-3') Student Mail Id is:
+            div #{Mail_Id}
+        button(class="btn btn-danger m-2" onclick="deleteOnid()") Delete
+        button(class="btn btn-secondary m-2" onclick="cancel()") Cancel
+    script.
+        function cancel() {
+            window.location.href='/Student'
+        }
+    script.
+        function deleteOnid() {
+            console.log("starting delete")
+            // delete first
+            fetch(actionid, {
+            method: 'DELETE'
+            }).then((resp) => {
+            return resp.json(); // or resp.text() or whatever the server sends
+            }).then((body) => {
+            alert("Delete succeded")
+            window.location.href='/Student'
+            // TODO handle body
+            }).catch((error) => {
+            // TODO handle error
+            alert("Delete failed " + error )
+            });
+        }
